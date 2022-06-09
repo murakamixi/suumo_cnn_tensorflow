@@ -34,8 +34,8 @@ def main(argv):
 
     # クラス分類に使用しない不要なtagを削除
     for drop_img_tag in drop_img_tags:
-            index_name = imgs_df[imgs_df['img_tag'] == drop_img_tag].index
-            imgs_df.drop(index_name, inplace=True)
+      index_name = imgs_df[imgs_df['img_tag'] == drop_img_tag].index
+      imgs_df.drop(index_name, inplace=True)
 
     # 画像のtagごとにディレクトリに分類
     for img_name in imgs_df['img_name']:
