@@ -131,3 +131,6 @@ dmypy.json
 # Dataset folder
 /csv/*
 /imgs/*
+/data/*
+/log/*
+/result/*
