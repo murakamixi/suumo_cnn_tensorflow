@@ -1,0 +1,2 @@
+# suumo_cnn_tensorflow
+tensorflowでsuumoの画像を分類するネットワークです。
