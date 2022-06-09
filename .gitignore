@@ -129,5 +129,5 @@ dmypy.json
 .pyre/
 
 # Dataset folder
-.csv/*
-.imgs/*
+/csv/*
+/imgs/*
