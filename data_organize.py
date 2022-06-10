@@ -6,6 +6,7 @@ from absl import flags
 
 FLAGS = flags.FLAGS
 flags.DEFINE_integer('file_num', 10, 'number of files', short_name='n')
+flags.DEFINE_bool('finetuning', False, 'finetuning', short_name='fine')
 
 # imgsのcsvから削除するカラムのリスト
 drop_house_columns = ['house_id', 'img_id']
@@ -24,6 +25,7 @@ img_tag_names = {'浴室':'bathroom',
                 'トイレ':'wc',
                 }
 
+
 def main(argv):
   for file_num in range(1, FLAGS.file_num+1):
     imgs_df = pd.read_csv('./csv/suumo/imgs_Yamagata_{}.csv'.format(file_num), index_col=0)
@@ -37,6 +39,8 @@ def main(argv):
       index_name = imgs_df[imgs_df['img_tag'] == drop_img_tag].index
       imgs_df.drop(index_name, inplace=True)
 
+    img_count = 0
+
     # 画像のtagごとにディレクトリに分類
     for img_name in imgs_df['img_name']:
       #画像のパス
@@ -49,11 +53,27 @@ def main(argv):
       for img_tag_name, folder_name in img_tag_names.items():
         # タグとフォルダ名が一致していればそのフォルダに写真を移動
         if img_tag == img_tag_name:
-          try:
-            shutil.move(img_path, './imgs/{}/'.format(folder_name))
-          except Exception as e:
-            move_error = e
-            break
+          if FLAGS.finetuning == False:
+            try:
+              shutil.move(img_path, './data/train/{}/'.format(folder_name))
+              img_count += 1
+            except Exception as e:
+              move_error = e
+              break
+          elif FLAGS.finetuning == True:
+            # 20%をテストデータに割り振る
+            if img_count % 5 == 0 and img_count != 0:
+              try:
+                shutil.move(img_path, './data/validation/{}/'.format(folder_name))
+                img_count += 1
+              except Exception as e:
+                move_error = e
+            else:
+              try:
+                shutil.move(img_path, './data/train/{}/'.format(folder_name))
+                img_count += 1
+              except Exception as e:
+                move_error = e
 
 if __name__ == '__main__':
   app.run(main)
