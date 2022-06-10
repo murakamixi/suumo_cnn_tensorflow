@@ -27,7 +27,7 @@ nb_classes = len(classes)
 img_width, img_height = FLAGS.img_width, FLAGS.img_height
 
 # パラメータの保存先
-result_dir = './result'
+result_dir = './results'
 
 def main(argv):
   # VGG16のロード。FC層は不要なので include_top=False

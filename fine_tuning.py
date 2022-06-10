@@ -15,25 +15,23 @@ from absl import flags
 FLAGS = flags.FLAGS
 flags.DEFINE_integer('img_width', 64, 'img_width', short_name='iw')
 flags.DEFINE_integer('img_height', 64, 'img_height', short_name='ih')
-
 flags.DEFINE_integer('batch_size', 5, 'batch_size', short_name='b')
 flags.DEFINE_integer('epochs', 20, 'epoch', short_name='e')
 
 classes = ['bathroom', 'genkan', 'kitchen', 'mitorizu', 'senmenjo', 'wc',]
 nb_classes = len(classes)
 
-img_width, img_height = FLAGS.img_width, FLAGS.img_height
-
 #traning and validation data dir
 train_data_dir = './data/train'
 validation_data_dir = './data/validation'
 
-batch_size = FLAGS.batch_size
-nb_epoch = FLAGS.epochs
+result_dir = './results'
 
-result_dir = './result'
+def main(argv):
+  img_width, img_height = FLAGS.img_width, FLAGS.img_height
+  batch_size = FLAGS.batch_size
+  nb_epoch = FLAGS.epochs
 
-def main():
   # トレーンング用、バリデーション用データを生成するジェネレータ作成
   train_datagen = ImageDataGenerator(
     rescale=1.0 / 255,
