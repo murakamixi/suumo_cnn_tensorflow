@@ -25,7 +25,7 @@ nb_classes = len(classes)
 train_data_dir = './data/train'
 validation_data_dir = './data/validation'
 
-result_dir = './result'
+result_dir = './results'
 
 def main(argv):
   img_width, img_height = FLAGS.img_width, FLAGS.img_height
